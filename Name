@@ -1,0 +1,58 @@
+local menu = {
+    title = "Nexar",
+    features = {
+        { category = "ESP", options = {} },
+        { category = "Car Mods", options = {} },
+        { category = "Teleports", options = {} },
+        { category = "AutoFarm", options = {} },
+        {
+            category = "Aimbot",
+            options = {
+                { name = "Enable Aimbot", type = "checkbox", value = false },
+                { name = "Aimbot Keybind", type = "dropdown", value = "V", options = {"V", "B", "C", "Shift"} },
+                { name = "Shot", type = "dropdown", value = "Body", options = {"Body", "Head"} },
+                { name = "Wallcheck", type = "checkbox", value = false },
+                { name = "Prediction", type = "checkbox", value = false },
+                { name = "FOV Circle", type = "checkbox", value = false },
+            }
+        },
+        { category = "Player Stuff", options = {} },
+        { category = "Misc", options = {} },
+    }
+}
+
+-- Функция для отображения меню
+function drawMenu()
+    print("======== " .. menu.title .. " ========")
+    for _, feature in ipairs(menu.features) do
+        print("[" .. feature.category .. "]")
+        for _, option in ipairs(feature.options) do
+            if option.type == "checkbox" then
+                print(option.name .. ": " .. (option.value and "Enabled" or "Disabled"))
+            elseif option.type == "dropdown" then
+                print(option.name .. ": " .. option.value)
+            end
+        end
+        print("-----------------------------")
+    end
+end
+
+-- Пример изменения опций
+function toggleOption(category, optionName)
+    for _, feature in ipairs(menu.features) do
+        if feature.category == category then
+            for _, option in ipairs(feature.options) do
+                if option.name == optionName and option.type == "checkbox" then
+                    option.value = not option.value
+                    print(optionName .. " toggled to " .. tostring(option.value))
+                    return
+                end
+            end
+        end
+    end
+end
+
+-- Пример работы
+drawMenu()
+toggleOption("Aimbot", "Enable Aimbot")
+drawMenu()
